@@ -1,0 +1,11 @@
+#/bin/bash
+
+rm -Rf workspace
+mkdir workspace
+
+git clone https://github.com/andrerocker/rails-example.git workspace/repository
+cp -R buildpacks workspace/buildpacks
+cp tmp/Dockerfile workspace
+
+docker build -t cegonha-freaklayer workspace/repository
+docker build -t cegonha-freaklayer workspace
