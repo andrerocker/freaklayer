@@ -1,6 +1,6 @@
 1 - Projeto
-    - Criar Workspace
     - Clonar Projeto
+    - Criar Workspace
     - Existe Dockerfile
     - Copiar buildpacks
 
