@@ -9,7 +9,6 @@ mkdir workspace
 ## fase 2
 git clone --depth 0 https://github.com/andrerocker/rails-example.git workspace/repository
 cp -R buildpacks workspace/buildpacks
-cp tmp/Dockerfile workspace
 
 # PASSO 2 - buildimage
 
