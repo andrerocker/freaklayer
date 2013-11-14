@@ -2,6 +2,7 @@ package util
 
 import (
     "io"
+    "fmt"
     "os/exec"
 )
 
@@ -14,5 +15,6 @@ func ExecuteAndWriteToStreamFromDirectory(output io.Writer, directory string, pr
     command.Dir = directory
     command.Stdout = output
     command.Stderr = output
+    fmt.Println(command)
     return command.Run()
 }

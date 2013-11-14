@@ -1,5 +1,1 @@
-#!/bin/bash -l
-cd $1
-
-bundle install --deployment --without "development test"
-RAILS_ENV=production bundle exec rake assets:precompile
+build.rb

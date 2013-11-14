@@ -2,18 +2,24 @@ package docker
 
 import (
     "io"
+    "fmt"
     "../util"
 )
 
-func MakeDockerBuilderImage(output io.Writer, project string, requestId string) error {
+func MakeBuilderImage(output io.Writer, project string, requestId string) error {
     sign := util.BuildWorkspaceSign(project, requestId)
-    repository := util.ResolveWorkspaceRepositoryPath(sign)
+    repository, _ := util.ResolveWorkspaceRepositoryPath(sign)
     return util.ExecuteAndWriteToStreamFromDirectory(output, repository, "docker", "build", "-t", sign, ".")
 }
 
-func BuildPackageOnBuilderImage(output io.Writer, project string, requestId string) error {
+func BuildPackage(output io.Writer, project string, requestId string, image string) error {
     sign := util.BuildWorkspaceSign(project, requestId)
-    repository := util.ResolveWorkspaceRepositoryPath(sign)
-    args := []string { "run", "-v", "/home/andrerocker/andre/work/locaweb/infradev/docker/freaklayer/buildpacks:/buildpacks", "-v", repository+":/repository", "-t", sign, "/buildpacks/build", "/repository" }
+    buildpacks, _ := util.ResolveWorkspaceBuildpacksPath()
+    repository, _ := util.ResolveWorkspaceRepositoryPath(sign)
+
+    buildpacksMount := fmt.Sprintf("%s:/buildpacks", buildpacks)
+    repositoryMount := fmt.Sprintf("%s:/repository", repository)
+
+    args := []string { "run", "-v", buildpacksMount, "-v", repositoryMount, "-t", image, "/buildpacks/build", "/repository" }
     return util.ExecuteAndWriteToStreamFromDirectory(output, repository, "docker", args...)
 }

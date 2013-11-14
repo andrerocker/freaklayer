@@ -1,21 +1,28 @@
 package util
 
-import "os"
+import (
+    "os"
+    "path/filepath"
+)
 
 func BuildWorkspaceInitialDirs(project string) error {
     return os.MkdirAll(resolveWorkspacePath(project), 0755)
 }
 
+//TODO: Possivelmente desnecessario
 func CheckRepositoryDockerfile(repository string) error {
     _, err := os.Stat(repository + "/Dockerfile")
     return err
 }
 
-func ResolveWorkspaceRepositoryPath(project string) string {
-    return resolveWorkspacePath(project) + "/repository"
+func ResolveWorkspaceBuildpacksPath() (string, error) {
+    return filepath.Abs(GetConfig("workspace", "buildpack"))
+}
+
+func ResolveWorkspaceRepositoryPath(project string) (string, error) {
+    return filepath.Abs(resolveWorkspacePath(project) + "/repository")
 }
 
 func resolveWorkspacePath(project string) string {
-    // read from config file
-    return "/tmp/freaklayer/project/" + project
+    return GetConfig("workspace", "directory") + "/" + project
 }
