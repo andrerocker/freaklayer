@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 def buildpacks
-    @buildpacks ||= Dir["#{File.absolute_path(".")}/*/"].select do |current|
+    @buildpacks ||= Dir["#{File.absolute_path(File.dirname(__FILE__))}/*/"].select do |current|
         File.exist?("#{current}/bin/detect") &&
             File.exist?("#{current}/bin/compile")
     end

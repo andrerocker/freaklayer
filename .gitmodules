@@ -1,0 +1,3 @@
+[submodule "etc/bricklayer/buildpacks/ruby"]
+	path = etc/bricklayer/buildpacks/ruby
+	url = https://github.com/heroku/heroku-buildpack-ruby.git
