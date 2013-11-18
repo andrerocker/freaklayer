@@ -6,7 +6,7 @@ import (
     "../util"
 )
 
-func CloneProject(output io.Writer, repository string, target string) error {
+func CloneProject(output io.Writer, repository string, branch string, target string) error {
     _, err := os.Stat(target)
 
     if err == nil {
@@ -14,5 +14,5 @@ func CloneProject(output io.Writer, repository string, target string) error {
         os.RemoveAll(target)
     }
 
-    return util.ExecuteAndWriteToStream(output, "git", "clone", "--depth", "0", repository, target)
+    return util.ExecuteAndWriteToStream(output, "git", "clone", "-b", branch, "--depth", "0", repository, target)
 }

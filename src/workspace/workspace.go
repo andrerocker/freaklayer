@@ -15,7 +15,7 @@ func BuildWorkspace(output io.Writer, project string, requestId string, reposito
         return "", err
     }
 
-    if err := git.CloneProject(output, repositoryUrl, repository); err != nil {
+    if err := git.CloneProject(output, repositoryUrl, "1.9.3", repository); err != nil {
         util.Message(err, output, "cannot clone git repository")
         return "", err
     }
