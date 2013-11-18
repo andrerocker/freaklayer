@@ -14,5 +14,5 @@ func CloneProject(output io.Writer, repository string, target string) error {
         os.RemoveAll(target)
     }
 
-    return util.ExecuteAndWriteToStream(output, "git", "clone", repository, target)
+    return util.ExecuteAndWriteToStream(output, "git", "clone", "--depth", "0", repository, target)
 }
