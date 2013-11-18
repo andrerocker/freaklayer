@@ -6,7 +6,10 @@ import (
 )
 
 func BuildWorkspaceInitialDirs(project string) error {
-    return os.MkdirAll(resolveWorkspacePath(project), 0755)
+    err := os.MkdirAll(resolveWorkspacePath(project), 0777)
+    cache, _ := ResolveWorkspaceRepositoryCache(project)
+    os.MkdirAll(cache, 0755)
+    return err
 }
 
 //TODO: Possivelmente desnecessario
@@ -21,6 +24,10 @@ func ResolveWorkspaceBuildpacksPath() (string, error) {
 
 func ResolveWorkspaceRepositoryPath(project string) (string, error) {
     return filepath.Abs(resolveWorkspacePath(project) + "/repository")
+}
+
+func ResolveWorkspaceRepositoryCache(project string) (string, error) {
+    return filepath.Abs(resolveWorkspacePath(project) + "/cache")
 }
 
 func resolveWorkspacePath(project string) string {
