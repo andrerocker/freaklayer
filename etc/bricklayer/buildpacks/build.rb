@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+require "pty"
 
 def buildpacks
     @buildpacks ||= Dir["#{File.absolute_path(File.dirname(__FILE__))}/*/"].select do |current|
@@ -20,7 +21,13 @@ def execute
     end
 
     puts "Buildpack detected for your project!! -> #{detect}"
-    %x(#{detect}/bin/compile #{ARGV.first})
+    command "#{detect}/bin/compile #{ARGV.first} #{ARGV.last}"
+end
+
+def command(command)
+    PTY.spawn(command) do |stdin, stdout, pid|
+        stdin.each { |line| print line }
+    end rescue nil
 end
 
 execute
