@@ -6,10 +6,11 @@ import (
 )
 
 func BuildWorkspaceInitialDirs(project string) error {
-    err := os.MkdirAll(resolveWorkspacePath(project), 0777)
-    cache, _ := ResolveWorkspaceRepositoryCache(project)
-    os.MkdirAll(cache, 0755)
-    return err
+    work  := resolveWorkspacePath(project)
+    cache, _ := ResolveWorkspaceCache(project)
+    export, _ := ResolveWorkspaceExportPath(project)
+
+    return makeDirs(work, cache, export)
 }
 
 //TODO: Possivelmente desnecessario
@@ -26,10 +27,29 @@ func ResolveWorkspaceRepositoryPath(project string) (string, error) {
     return filepath.Abs(resolveWorkspacePath(project) + "/repository")
 }
 
-func ResolveWorkspaceRepositoryCache(project string) (string, error) {
+func ResolveWorkspaceExportPath(project string) (string, error) {
+    return filepath.Abs(resolveWorkspacePath(project) + "/export")
+}
+
+func ResolveWorkspaceExportFileName(project string) string {
+    export, _ := ResolveWorkspaceExportPath(project)
+    return export + "/build.tar.gz"
+}
+
+func ResolveWorkspaceCache(project string) (string, error) {
     return filepath.Abs(resolveWorkspacePath(project) + "/cache")
 }
 
 func resolveWorkspacePath(project string) string {
     return GetConfig("workspace", "directory") + "/" + project
+}
+
+func makeDirs(dirs ... string) error {
+    for _, dir := range dirs {
+        if err := os.MkdirAll(dir, 0777); err != nil {
+            return err
+        }
+    }
+
+    return nil
 }

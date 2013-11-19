@@ -6,7 +6,7 @@ import (
     "crypto/md5"
 )
 
-func BuildWorkspaceSign(chunks ... string) string {
+func WorkspaceSign(chunks ... string) string {
     hash := md5.New()
 
     for _, chunk := range chunks {

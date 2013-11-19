@@ -12,10 +12,8 @@
 -------------------------------------------------------------------------------------------
 
 1 - Projeto
-    - Criar Workspace
+    - Criar Workspace (estrutura necessaria para build) // curl -X POST http://localhost:3000/workspace/cegonha -d 'repo: git@bacon.com:bacon.git'
     - Clonar Projeto
-    - Montar buildpacks
-    - Montar Cache
 
 2 - Build Project
     - Buildar Projeto (Heroku Buildpacks Por enquanto)
@@ -27,3 +25,6 @@
     - Docker
 
 -------------------------------------------------------------------------------------------
+
+curl -X POST http://localhost:8080/workspace/cegonha/branch/1.9.3 -d "repository=git@code.locaweb.com.br:iaas/cegonha.git"
+curl -X POST http://localhost:8080/build/cegonha/image/locaweb-ruby
