@@ -1,4 +1,5 @@
 bootstrap:
+	GOPATH=~/.bricklayer go get "github.com/hoisie/web"
 	GOPATH=~/.bricklayer go get "github.com/vaughan0/go-ini"
 
 run:
