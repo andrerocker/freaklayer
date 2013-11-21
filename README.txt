@@ -17,10 +17,11 @@
 
 2 - Build Project
     - Buildar Projeto (Heroku Buildpacks Por enquanto)
-    - Empacotar Projeto (tar.gz) (poderia ser um debian tbm pah!)
-    - Remover git, estrutura velha e talves o cache!
 
-3 - Download
+3 - Empacotar
+    - Empacotar Projeto (tar.gz) (poderia ser um debian tbm pah!)
+
+4 - Download
     - Download do Pacotao!
     - Docker
 
