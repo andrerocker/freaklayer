@@ -2,12 +2,8 @@ package main
 
 import (
     "os"
-    "fmt"
-    "strings"
-    "net/http"
-    "./workspace"
+    "./web"
     "./workspace/util"
-    "github.com/hoisie/web"
 )
 
 // curl http:://localhost:3000/images
@@ -39,48 +35,18 @@ import (
 //     }
 // }
 
-type Acme struct {
-    http.ResponseWriter
-}
-
-func (self Acme) WriteString(message string) {
-    self.WriteString(message)
-    self.Flush()
-}
-
-func initialize() {
+func main() {
     if err := util.InitConfig(); err != nil {
         util.Message(err, os.Stdout, "problems loading configuration file")
         return
     }
+
+    if err := web.DrawRoutes(); err != nil {
+        util.Message(err, os.Stdout, "problems drawing routes")
+        return
+    }
+
+    web.Run()
 }
 
-func main() {
-    initialize()
-    web.Post("/workspace/(.*)/branch/(.*)", buildWorkspace)
-    web.Post("/build/(.*)/image/(.*)", buildPackage)
-    web.Run("0.0.0.0:8080")
-}
 
-func buildWorkspace(context *web.Context, project string, branch string) {
-    acme := Acme{&context.ResponseWriter}
-    repository := context.Params["repository"]
-    requestId := resolveRequestId(project, context)
-    workspace.BuildWorkspace(acme, requestId, repository, branch)
-}
-
-func buildPackage(context *web.Context, project string, image string) {
-    requestId := resolveRequestId(project, context)
-    err := workspace.BuildPackage(context.ResponseWriter, requestId, image)
-    fmt.Println(err)
-}
-
-func resolveRequestId(project string, context *web.Context) string {
-    remote := strings.Split(context.Request.RemoteAddr, ":")[0]
-    return util.WorkspaceSign(project, remote)
-}
-
- //func (ctx *web.Context) WriteString(content string) {
- //    fmt.Println("YEAHHHH")
- //    ctx.ResponseWriter.Write([]byte(content))
- //}
