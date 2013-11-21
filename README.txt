@@ -56,5 +56,6 @@ Melhorias:
 
 -------------------------------------------------------------------------------------------
 
+curl -X POST http://localhost:8080/image/locaweb-ruby -d "dockerfile=$(cat Dockerfile)"
 curl -X POST http://localhost:8080/workspace/cegonha/branch/1.9.3 -d "repository=git@code.locaweb.com.br:iaas/cegonha.git"
 curl -X POST http://localhost:8080/build/cegonha/image/locaweb-ruby

@@ -1,4 +1,4 @@
-FROM asemenov/squeeze
+FROM rohan/lxc-squeeze
 MAINTAINER Freaklayer Team: 0.1
 
 RUN echo "deb http://mirror-debian.locaweb.com.br/debian/ squeeze main non-free" > /etc/apt/sources.list

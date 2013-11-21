@@ -13,10 +13,8 @@ func BuildWorkspaceInitialDirs(project string) error {
     return makeDirs(work, cache, export)
 }
 
-//TODO: Possivelmente desnecessario
-func CheckRepositoryDockerfile(repository string) error {
-    _, err := os.Stat(repository + "/Dockerfile")
-    return err
+func BuildWorkspaceDockerInitialDirs(image string) error {
+    return makeDirs(ResolveWorkspaceDockerImagePath(image))
 }
 
 func ResolveWorkspaceBuildpacksPath() (string, error) {
@@ -38,6 +36,18 @@ func ResolveWorkspaceExportFileName(project string) string {
 
 func ResolveWorkspaceCache(project string) (string, error) {
     return filepath.Abs(resolveWorkspacePath(project) + "/cache")
+}
+
+func ResolveWorkspaceDockerImagesPath() string {
+    return GetConfig("docker", "images")
+}
+
+func ResolveWorkspaceDockerImagePath(project string) string {
+    return ResolveWorkspaceDockerImagesPath() + "/" + project
+}
+
+func ResolveWorkspaceDockerImageFile(project string) string {
+    return ResolveWorkspaceDockerImagePath(project) + "/Dockerfile"
 }
 
 func resolveWorkspacePath(project string) string {

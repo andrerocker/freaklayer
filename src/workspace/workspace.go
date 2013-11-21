@@ -16,7 +16,7 @@ func BuildWorkspace(output io.Writer, requestId string, repositoryUrl string, br
         return "", err
     }
 
-        if err := git.CloneProject(output, repositoryUrl, branch, repository); err != nil {
+    if err := git.CloneProject(output, repositoryUrl, branch, repository); err != nil {
         util.Message(err, output, "cannot clone git repository")
         return "", err
     }
@@ -37,4 +37,26 @@ func BuildExport(output io.Writer, requestId string) error {
     exportFile := util.ResolveWorkspaceExportFileName(requestId)
 
     return export.BuildTar(output, repository, exportFile)
+}
+
+func BuildDockerImage(output io.Writer, image string, content string) error {
+    if err := util.BuildWorkspaceDockerInitialDirs(image); err != nil {
+        util.Message(err, output, "cannot build docker workspace structure")
+        return err
+    }
+
+    dockerfile := util.ResolveWorkspaceDockerImageFile(image)
+    dockerfilePath := util.ResolveWorkspaceDockerImagePath(image)
+
+    if err := docker.MakeDockerfile(output, dockerfile, content); err != nil {
+        util.Message(err, output, "cannot create docker file: "+ dockerfilePath)
+        return err
+    }
+
+    if err := docker.MakeImage(output, image, dockerfilePath); err != nil {
+        util.Message(err, output, "cannot create docker image: "+ dockerfilePath)
+        return err
+    }
+
+    return nil
 }

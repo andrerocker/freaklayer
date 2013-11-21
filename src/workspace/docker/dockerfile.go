@@ -2,22 +2,14 @@ package docker
 
 import (
     "io"
-    "fmt"
     "../util"
+    "io/ioutil"
 )
 
-// possivelmente depreciado!
-// func MakeBuilderImage(output io.Writer, project string, requestId string) error {
-//     sign := util.BuildWorkspaceSign(project, requestId)
-//     repository, _ := util.ResolveWorkspaceRepositoryPath(sign)
-//     return util.ExecuteAndWriteToStreamFromDirectory(output, repository, "docker", "build", "-t", sign, ".")
-// }
+func MakeDockerfile(output io.Writer, file string, content string) error {
+    return ioutil.WriteFile(file, []byte(content), 0644)
+}
 
-func ExecuteBuild(output io.Writer, image string, buildpacks string, repository string, cache string) error {
-    buildpacksMount := fmt.Sprintf("%s:/buildpacks", buildpacks)
-    repositoryMount := fmt.Sprintf("%s:/repository", repository)
-    cacheMount  := fmt.Sprintf("%s:/cache", cache)
-
-    args := []string { "run", "-v", buildpacksMount, "-v", repositoryMount, "-v", cacheMount, "-u", "builder", "-t", image, "/buildpacks/build", "/repository", "/cache" }
-    return util.ExecuteAndWriteToStreamFromDirectory(output, repository, "docker", args...)
+func MakeImage(output io.Writer, name, path string) error {
+    return util.ExecuteAndWriteToStreamFromDirectory(output, path, "docker", "build", "-t", name, ".")
 }
