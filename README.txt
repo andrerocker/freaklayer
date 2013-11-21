@@ -1,4 +1,33 @@
 -------------------------------------------------------------------------------------------
+TODO:
+
+- Imagens
+    - Criar
+    - Listar
+    - Deletar
+
+- Workspace
+    - [OK] Criar
+    - Deletar (cache, repo, etc)
+
+- Build
+    - [OK] Criar
+    - Deletar (apenas repo)
+
+- Export
+    - [OK] Criar
+    - Deletar
+    - Suporte a multiplos exports (TarGz, Debian)
+
+- Download
+    - [OK] Servir
+
+-------------------------------------------------------------------------------------------
+Melhorias:
+
+- Utilizar API do Docker
+
+-------------------------------------------------------------------------------------------
 
 0 - Imagem de Build Padrao
     - Debian Squeeze (Heroku build pack ruby use libssl0.9.2)
