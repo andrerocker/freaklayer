@@ -39,6 +39,11 @@ func BuildExport(output io.Writer, requestId string) error {
     return export.BuildTar(output, repository, exportFile)
 }
 
+func StatExport(output io.Writer, requestId string) error {
+    repository, _ := util.ResolveWorkspaceRepositoryPath(requestId)
+    return export.FilesCount(output, repository)
+}
+
 func BuildDockerImage(output io.Writer, image string, content string) error {
     if err := util.BuildWorkspaceDockerInitialDirs(image); err != nil {
         util.Message(err, output, "cannot build docker workspace structure")

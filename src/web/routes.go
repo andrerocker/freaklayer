@@ -14,6 +14,8 @@ func DrawRoutes() error {
     web.Post("/build/(.*)/image/(.*)", buildPackage)
     web.Post("/export/(.*)", buildExport)
     web.Post("/image/(.*)", buildImage)
+
+    web.Get("/export/(.*)", statExport)
     web.Get("/download/(.*)", download)
 
     return nil
@@ -40,6 +42,11 @@ func buildPackage(context *web.Context, project string, image string) {
 func buildExport(context *web.Context, project string) {
     requestId, writer := util.RequestIdAndResponseWriter(project, context)
     workspace.BuildExport(writer, requestId)
+}
+
+func statExport(context *web.Context, project string) {
+    requestId, writer := util.RequestIdAndResponseWriter(project, context)
+    workspace.StatExport(writer, requestId)
 }
 
 func download(context *web.Context, project string) {
