@@ -26,6 +26,7 @@ TODO:
 Melhorias:
 
 - Utilizar API do Docker
+- Formatar saida para JSON ? como eh chunked encoding pode ser legal colocar um output de status
 
 -------------------------------------------------------------------------------------------
 
